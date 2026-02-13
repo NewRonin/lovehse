@@ -1,37 +1,37 @@
 generator client {
   provider = "prisma-client-js"
-  engineType = "library" 
 }
 
 datasource db {
   provider = "mysql"
 }
 
-model participant {
-  id        String   @id @db.Char(36)
-  name      String
+model Ticket {
+  id        Int      @id @default(autoincrement())
+  number    String   @unique @db.VarChar(64)
+  vote      Vote?
   createdAt DateTime @default(now())
-  vote      vote[]
-
-  @@index([name], map: "Participant_name_idx")
 }
 
-model ticket {
-  id        String   @id @db.Char(36)
-  number    String   @unique(map: "Ticket_number_key") @db.VarChar(64)
-  createdAt DateTime @default(now())
-  vote      vote?
+model Participant {
+  id       Int     @id @default(autoincrement())
+  name     String  @db.VarChar(191)
+  imageUrl String? @db.VarChar(255)
 
-  @@index([number], map: "Ticket_number_idx")
+  votes     Vote[]
+  createdAt DateTime @default(now())
 }
 
-model vote {
-  id            String      @id @db.Char(36)
-  ticketId      String      @unique(map: "Vote_ticketId_key") @db.Char(36)
-  participantId String      @db.Char(36)
-  createdAt     DateTime    @default(now())
-  participant   participant @relation(fields: [participantId], references: [id], map: "Vote_participantId_fkey")
-  ticket        ticket      @relation(fields: [ticketId], references: [id], onDelete: Cascade, map: "Vote_ticketId_fkey")
+model Vote {
+  id Int @id @default(autoincrement())
 
-  @@index([participantId], map: "Vote_participantId_idx")
+  ticketId      Int @unique
+  participantId Int
+
+  ticket      Ticket      @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  participant Participant @relation(fields: [participantId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([participantId])
 }

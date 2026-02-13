@@ -11,7 +11,12 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody(event);
 
-  requireString(body.participantId, "Participant ID");
+  if (typeof body.participantId !== "number") {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Participant ID is required",
+    });
+  }
 
   const vote = await createVote(ticketNumber, body.participantId);
 
