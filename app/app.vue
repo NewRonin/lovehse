@@ -4,10 +4,19 @@
   </NuxtLayout>
 </template>
 
-<style lang="scss" scoped>
+<script setup>
 
-:global(.p-select-label) {
-  font-size: 1.4rem !important;
+
+</script>
+
+<style lang="scss">
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
-
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
 </style>

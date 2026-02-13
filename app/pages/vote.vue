@@ -39,7 +39,7 @@ async function confirmVote() {
 </script>
 
 <template>
-  <div class="page">
+  <main class="page-container">
     <h1>Выберите пару</h1>
 
     <div v-if="pending">Загрузка...</div>
@@ -65,11 +65,12 @@ async function confirmVote() {
     <p v-if="error" class="error">
       {{ error }}
     </p>
-  </div>
+  </main>
 </template>
 
 <style scoped>
-.page {
+.page-container {
+  position: relative;
   max-width: 1000px;
   margin: 40px auto;
   padding: 20px;
