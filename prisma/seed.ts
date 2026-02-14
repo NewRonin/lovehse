@@ -1,6 +1,8 @@
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+import fs from "fs";
+import path from "path";
 
 const adapter = new PrismaMariaDb({
   host: process.env.DB_HOST,
@@ -15,67 +17,60 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log("🌱 Seeding...");
 
-  // Очистка (по желанию)
+  // Очистка
   await prisma.vote.deleteMany();
   await prisma.ticket.deleteMany();
   await prisma.participant.deleteMany();
 
   // ========================
-  // 1️⃣ Создаём 8 пар
+  // 1️⃣ Создаём пары
   // ========================
 
-  const participants = await prisma.participant.createMany({
+  await prisma.participant.createMany({
     data: [
-      {
-        name: "Анна & Дмитрий",
-        imageUrl: "/images/pairs/1.jpg",
-      },
-      {
-        name: "Мария & Алексей",
-        imageUrl: "/images/pairs/2.jpg",
-      },
-      {
-        name: "Ольга & Сергей",
-        imageUrl: "/images/pairs/3.jpg",
-      },
-      {
-        name: "Екатерина & Иван",
-        imageUrl: "/images/pairs/4.jpg",
-      },
-      {
-        name: "Наталья & Максим",
-        imageUrl: "/images/pairs/5.jpg",
-      },
-      {
-        name: "Юлия & Андрей",
-        imageUrl: "/images/pairs/6.jpg",
-      },
-      {
-        name: "Татьяна & Роман",
-        imageUrl: "/images/pairs/7.jpg",
-      },
-      {
-        name: "Алина & Кирилл",
-        imageUrl: "/images/pairs/8.jpg",
-      },
+      { name: "Анастасия & Антон", imageUrl: "/images/pairs/1.webp" },
+      { name: "Дарья & Артём", imageUrl: "/images/pairs/2.webp" },
+      { name: "Дарья & Павел", imageUrl: "/images/pairs/3.webp" },
+      { name: "Дмитрий & Валерия", imageUrl: "/images/pairs/4.webp" },
+      { name: "Алексей & Виталина", imageUrl: "/images/pairs/5.webp" },
+      { name: "Максим & Ольга", imageUrl: "/images/pairs/6.webp" },
+      { name: "Михаил & Мария", imageUrl: "/images/pairs/7.webp" },
+      { name: "Полина & Алексей", imageUrl: "/images/pairs/8.webp" },
     ],
   });
 
   console.log("✅ Participants created");
 
   // ========================
-  // 2️⃣ Создаём 200 билетов
+  // 2️⃣ Читаем tickets.txt
   // ========================
 
-  const tickets = Array.from({ length: 200 }).map((_, i) => ({
-    number: `TICKET-${String(i + 1).padStart(4, "0")}`,
+  const filePath = path.join(process.cwd(), "tickets.txt");
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error("❌ tickets.txt не найден в корне проекта");
+  }
+
+  const fileContent = fs.readFileSync(filePath, "utf-8");
+
+  const ticketNumbers = fileContent
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+
+  // Убираем дубликаты
+  const uniqueTickets = [...new Set(ticketNumbers)];
+
+  const tickets = uniqueTickets.map((number) => ({
+    number,
   }));
 
   await prisma.ticket.createMany({
     data: tickets,
+    skipDuplicates: true, // если number уникальный
   });
 
-  console.log("✅ 200 tickets created");
+  console.log(`✅ ${tickets.length} tickets imported from file`);
 }
 
 main()
