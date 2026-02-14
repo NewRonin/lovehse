@@ -47,27 +47,32 @@ const emit = defineEmits(['confirm', 'close'])
 }
 
 .dialog {
-  background: white;
+  background: var(--background-white);
   padding: 30px;
   border-radius: 12px;
-  width: 320px;
+  width: 100%;
+  margin: 1.6rem;
   text-align: center;
 }
 
 .actions {
   margin-top: 20px;
   display: flex;
-  justify-content: space-between;
+  flex-flow: column wrap;
+  gap: .8rem;
+  justify-content: center;
 }
 
 button {
   padding: 8px 14px;
   cursor: pointer;
+  background-color: var(--hostel-900);
 }
 
 .primary {
-  background: #42b883;
-  color: white;
+  background: var(--accent);
+  color: var(--hostel-50);
   border: none;
 }
+
 </style>

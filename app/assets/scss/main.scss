@@ -39,7 +39,7 @@ body {
   position: relative;
   scroll-behavior: smooth;
   position: relative;
-  background: var(--hostel-900);
+  background: var(--base-black);
 
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -70,6 +70,17 @@ ul {
 
 li {
   list-style: none;
+}
+
+button {
+  background-color: var(--accent);
+  color: var(--hostel-50);
+  border: none;
+  border-radius: 12px;
+}
+
+input {
+  border: none;
 }
 
 .body-light {

@@ -83,13 +83,13 @@ function percent(votes: number) {
 <style scoped>
 .page {
   max-width: 900px;
-  margin: 60px auto;
+  margin: 3rem auto;
   padding: 20px;
 }
 
 .title {
   text-align: center;
-  font-size: 32px;
+  font-size: 3.2rem;
   margin-bottom: 40px;
 }
 
@@ -107,17 +107,12 @@ function percent(votes: number) {
 }
 
 .card {
-  background: white;
+  background: var(--background-white);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
   transition: 0.2s ease;
 }
 
-.card.winner {
-  border: 2px solid gold;
-  box-shadow: 0 8px 30px rgba(255, 200, 0, 0.25);
-}
 
 .rank {
   font-size: 22px;
@@ -157,8 +152,9 @@ function percent(votes: number) {
 
 .bar {
   height: 100%;
-  background: linear-gradient(90deg, #6c63ff, #8f88ff);
+  background: linear-gradient(90deg, var(--hostel-100), var(--hostel-900));
   transition: width 0.4s ease;
+  border-radius: 4rem;
 }
 
 .total {
@@ -166,5 +162,6 @@ function percent(votes: number) {
   text-align: center;
   font-size: 16px;
   opacity: 0.8;
+  color: var(--hostel-50);
 }
 </style>

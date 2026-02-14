@@ -24,6 +24,7 @@ async function login() {
 
 <template>
   <div class="auth">
+
     <h1>Авторизация по билету</h1>
 
     <form @submit.prevent="login">
@@ -41,6 +42,11 @@ async function login() {
     <p :style="[error ? { 'visibility' : 'visible'} : {'visibility' : 'hidden'}]">
       {{ error }}
     </p>
+
+    <div class="logo-container">
+      <img src="/logo-white-hostel.svg">
+      <!-- <img src="/logo-white-collab.svg"> -->
+    </div>
   </div>
 </template>
 
@@ -64,12 +70,31 @@ input {
 button {
   width: 100%;
   padding: 10px;
-  border-radius: 12px;
 }
 
 p {
   margin-top: 2rem;
   color: var(--accent);
   min-height: 2.4em;
+}
+
+h1 {
+  font-size: 3.2rem;
+}
+
+.logo-container {
+  position: absolute;
+  bottom: 4rem;
+  display: flex;
+  width: 100%;
+  max-height: 10%;
+  flex-flow: row wrap;
+  gap: 2rem;
+  justify-content: center;
+
+  img {
+    width: auto;
+    height: 4rem;
+  }
 }
 </style>

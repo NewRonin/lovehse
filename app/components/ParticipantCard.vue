@@ -48,7 +48,7 @@ function select() {
 }
 
 .card.selected {
-  border-color: #42b883;
+  border-color: var(--accent)
 }
 
 img {

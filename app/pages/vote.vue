@@ -76,6 +76,10 @@ async function confirmVote() {
   padding: 20px;
 }
 
+h1 {
+  font-size: 3.2rem;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
