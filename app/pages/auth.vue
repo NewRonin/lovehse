@@ -29,7 +29,7 @@ async function login() {
 
 <template>
   <div class="auth" :class="{ navigating: isNavigating }">
-  <video autoplay muted loop  :class="{ 'background-video' : true, 'videoLoaded': videoLoaded}" @canplay="videoLoaded = true">
+  <video autoplay muted loop playsinline :class="{ 'background-video' : true, 'videoLoaded': videoLoaded}" @canplay="videoLoaded = true">
     <source src="/background.webm" type="video/webm"> 
   </video> 
 
