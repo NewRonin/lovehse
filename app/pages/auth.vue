@@ -38,7 +38,7 @@ async function login() {
     <form @submit.prevent="login">
       <input
         v-model="number"
-        placeholder="Введите номер билета"
+        placeholder="Введите серию и номер билета"
         required
       />
 
