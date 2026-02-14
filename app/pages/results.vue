@@ -8,7 +8,9 @@ type ParticipantResult = {
   }
 }
 
-const { data, pending } = await useFetch<ParticipantResult[]>('/api/results')
+const { data, pending, refresh } = await useFetch<ParticipantResult[]>('/api/results')
+const lastUpdated = ref<Date>(new Date())
+const isRefreshing = ref(false)
 
 const totalVotes = computed(() =>
   data.value?.reduce((sum, p) => sum + p._count.votes, 0) ?? 0
@@ -22,11 +24,35 @@ function percent(votes: number) {
   if (!totalVotes.value) return 0
   return Math.round((votes / totalVotes.value) * 100)
 }
+
+function formatTime(date: Date) {
+  return date.toLocaleTimeString('ru-RU', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  })
+}
+
+async function handleRefresh() {
+  isRefreshing.value = true
+  await refresh()
+  lastUpdated.value = new Date()
+  isRefreshing.value = false
+}
 </script>
 
 <template>
   <div class="page">
-    <h1 class="title">Результаты голосования</h1>
+    <div class="header">
+      <h1 class="title">Результаты голосования</h1>
+      <div class="refresh-section">
+        <span class="last-updated">Обновлено: {{ formatTime(lastUpdated) }}</span>
+        <button class="refresh-btn" @click="handleRefresh" :disabled="isRefreshing">
+          <span v-if="!isRefreshing">Обновить</span>
+          <span v-else>⏳ Загрузка...</span>
+        </button>
+      </div>
+    </div>
 
     <div v-if="pending" class="loading">
       Загрузка результатов...
@@ -44,10 +70,7 @@ function percent(votes: number) {
         :class="{ winner: index === 0 }"
       >
         <div class="rank">
-          <span v-if="index === 0">🥇</span>
-          <span v-else-if="index === 1">🥈</span>
-          <span v-else-if="index === 2">🥉</span>
-          <span v-else>#{{ index + 1 }}</span>
+          <span>#{{ index + 1 }}</span>
         </div>
 
         <div class="info">
@@ -138,16 +161,44 @@ function percent(votes: number) {
   }
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .page {
   max-width: 900px;
   margin: 3rem auto;
   padding: 20px;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
 .title {
   text-align: center;
   font-size: 3.2rem;
-  margin-bottom: 40px;
+  margin-bottom: 0;
+  animation: slideDownFade 0.8s ease-out;
+  flex: 1;
+  min-width: 250px;
+}
+
+.refresh-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
   animation: slideDownFade 0.8s ease-out;
 }
 
@@ -252,6 +303,40 @@ function percent(votes: number) {
 .card.winner .bar {
   background: linear-gradient(90deg, rgba(255, 215, 0, 0.6), rgba(255, 215, 0, 1));
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+}
+
+.last-updated {
+  font-size: 12px;
+  opacity: 0.6;
+  font-weight: 500;
+  color: var(--hostel-50);
+}
+
+.refresh-btn {
+  padding: 8px 16px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.refresh-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+}
+
+.refresh-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.refresh-btn:disabled svg,
+.refresh-btn:disabled span:first-child {
+  animation: spin 1s linear infinite;
 }
 
 .total {

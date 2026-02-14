@@ -4,6 +4,7 @@ const { data: participants, pending } = await useFetch('/api/participants')
 
 const selectedId = ref<number | null>(null)
 const showDialog = ref(false)
+const showErrorDialog = ref(false)
 const loading = ref(false)
 const error = ref('')
 
@@ -30,10 +31,18 @@ async function confirmVote() {
 
     navigateTo('/results')
   } catch (e: any) {
-    error.value = e?.data?.statusMessage || 'Ошибка голосования'
+    const status = e?.status || e?.data?.statusCode
+    
+    if (status === 403) {
+      error.value = 'Вы уже проголосовали'
+    } else {
+      error.value = e?.data?.statusMessage || e?.message || 'Ошибка при голосовании'
+    }
+    
+    showDialog.value = false
+    showErrorDialog.value = true
   } finally {
     loading.value = false
-    showDialog.value = false
   }
 }
 </script>
@@ -62,9 +71,11 @@ async function confirmVote() {
       @close="showDialog = false"
     />
 
-    <p v-if="error" class="error">
-      {{ error }}
-    </p>
+    <VoteErrorDialog
+      :open="showErrorDialog"
+      :error="error"
+      @close="showErrorDialog = false"
+    />
   </main>
 </template>
 
@@ -142,10 +153,4 @@ h1 {
 .grid > :nth-child(5) { animation-delay: 0.5s; }
 .grid > :nth-child(6) { animation-delay: 0.6s; }
 .grid > :nth-child(n+7) { animation-delay: 0.7s; }
-
-.error {
-  margin-top: 20px;
-  color: red;
-  animation: slideDownFade 0.4s ease-out;
-}
 </style>
