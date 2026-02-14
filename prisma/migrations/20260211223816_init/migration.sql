@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE `Ticket` (
+CREATE TABLE `ticket` (
     `id` CHAR(36) NOT NULL,
     `number` VARCHAR(64) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -10,7 +10,7 @@ CREATE TABLE `Ticket` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Participant` (
+CREATE TABLE `participant` (
     `id` CHAR(36) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -20,7 +20,7 @@ CREATE TABLE `Participant` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Vote` (
+CREATE TABLE `vote` (
     `id` CHAR(36) NOT NULL,
     `ticketId` CHAR(36) NOT NULL,
     `participantId` CHAR(36) NOT NULL,
