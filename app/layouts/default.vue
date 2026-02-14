@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
-
     <div class="content">
+      <h1>ВЛЮБИСЬ</h1>
       <slot />
     </div>
 
@@ -36,5 +36,17 @@ function scrollToFooter() {
   position: relative;
   flex: 1;
   width: 100dvw;
+}
+
+h1 {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3.2rem;
+  text-align: center;
+  margin: 2rem 0;
+  font-family: DelaGothicOne;
+  color: var(--background-white);
 }
 </style>

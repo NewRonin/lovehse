@@ -40,7 +40,8 @@ function select() {
   border-radius: 12px;
   overflow: hidden;
   transition: 0.2s;
-  height: 600px;
+  aspect-ratio: 960 / 1280;
+  max-height: 600px;
 }
 
 .card:hover {
@@ -53,8 +54,9 @@ function select() {
 
 img {
   width: 100%;
-  height: 600px;
+  height: 100%;
   object-fit: cover;
+  background-color: var(--hostel-50);
 }
 
 .name {

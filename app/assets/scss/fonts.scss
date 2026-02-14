@@ -1,31 +1,35 @@
 @font-face {
-  font-family: 'AKONY';
-  src: url('/assets/fonts/AKONY.woff2') format('woff2'),
-  url('/assets/fonts/AKONY.woff') format('woff');
+  font-family: "AKONY";
+  src:
+    url("/assets/fonts/AKONY.woff2") format("woff2"),
+    url("/assets/fonts/AKONY.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Montserrat';
-  src: url('/assets/fonts/Montserrat-Medium.woff2') format('woff2'),
-  url('/assets/fonts/Montserrat-Medium.woff') format('woff');
+  font-family: "Montserrat";
+  src:
+    url("/assets/fonts/Montserrat-Medium.woff2") format("woff2"),
+    url("/assets/fonts/Montserrat-Medium.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Montserrat';
-  src: url('/assets/fonts/Montserrat-SemiBold.woff2') format('woff2'),
-  url('/assets/fonts/Montserrat-SemiBold.woff') format('woff');
+  font-family: "Montserrat";
+  src:
+    url("/assets/fonts/Montserrat-SemiBold.woff2") format("woff2"),
+    url("/assets/fonts/Montserrat-SemiBold.woff") format("woff");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'GTA';
-  src: url('/assets/fonts/GTA-Russian.woff2') format('woff2'),
-  url('/assets/fonts/GTA-Russian.woff') format('woff');
+  font-family: "DelaGothicOne";
+  src:
+    url("/assets/fonts/DelaGothicOne-Regular.woff2") format("woff2"),
+    url("/assets/fonts/DelaGothicOne-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }

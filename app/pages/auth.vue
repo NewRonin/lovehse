@@ -3,6 +3,7 @@ const number = ref('')
 const error = ref('')
 const loading = ref(false)
 const isNavigating = ref(false)
+const videoLoaded = ref(false)
 
 async function login() {
   error.value = ''
@@ -28,7 +29,7 @@ async function login() {
 
 <template>
   <div class="auth" :class="{ navigating: isNavigating }">
-  <video autoplay muted loop class="background-video">
+  <video autoplay muted loop  :class="{ 'background-video' : true, 'videoLoaded': videoLoaded}" @canplay="videoLoaded = true">
     <source src="/background.webm" type="video/webm"> 
   </video> 
 
@@ -138,7 +139,7 @@ async function login() {
   justify-content: center;
   align-items: center;
   min-height: 100dvh;
-  margin: 0 1.6rem;
+  padding: 0 1.6rem;
   text-align: center;
   background: ;
   transition: all 0.3s ease-out;
@@ -232,7 +233,11 @@ h1 {
   height: 100%;
   object-fit: cover;
   z-index: -1;
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+
+.videoLoaded {
   opacity: 0.2;
-  animation: fadeIn 0.8s ease-out 0.3s backwards;
 }
 </style>
