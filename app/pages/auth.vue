@@ -4,6 +4,7 @@ const error = ref('')
 const loading = ref(false)
 const isNavigating = ref(false)
 const videoLoaded = ref(false)
+const videoRef = ref<HTMLVideoElement | null>(null)
 
 async function login() {
   error.value = ''
@@ -25,13 +26,29 @@ async function login() {
     loading.value = false
   }
 }
+
+onMounted(() => {
+  if (videoRef.value && videoRef.value.readyState >= 2) {
+    videoLoaded.value = true
+  }
+})
 </script>
 
 <template>
-  <div class="auth" :class="{ navigating: isNavigating }">
-  <video autoplay muted loop playsinline :class="{ 'background-video' : true, 'videoLoaded': videoLoaded}" @canplay="videoLoaded = true">
-    <source src="/background.webm" type="video/webm"> 
-  </video> 
+  <div class="auth" :class="{ navigating: isNavigating, 'video-loaded': videoLoaded }">
+
+    <video
+      ref="videoRef"
+      autoplay
+      muted
+      loop
+      playsinline
+      class="background-video"
+      @loadeddata="videoLoaded = true"
+    >
+      <source src="/background.webm" type="video/webm">
+    </video>
+
 
     <h1>Авторизация по билету</h1>
 
@@ -236,8 +253,7 @@ h1 {
   opacity: 0;
   transition: opacity 0.8s ease-out;
 }
-
-.videoLoaded {
+.auth.video-loaded .background-video {
   opacity: 0.2;
 }
 </style>
