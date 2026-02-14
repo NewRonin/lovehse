@@ -29,7 +29,7 @@ async function login() {
 <template>
   <div class="auth" :class="{ navigating: isNavigating }">
   <video autoplay muted loop class="background-video">
-    <source src="/background.mp4" type="video/mp4"> 
+    <source src="/background.webm" type="video/webm"> 
   </video> 
 
     <h1>Авторизация по билету</h1>
@@ -137,7 +137,7 @@ async function login() {
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 1.6rem;
   text-align: center;
   background: ;
