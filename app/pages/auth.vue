@@ -12,8 +12,8 @@ async function login() {
       method: 'POST',
       body: { number: number.value }
     })
-
     navigateTo('/vote')
+
   } catch (e: any) {
     error.value = e?.data?.statusMessage || 'Ошибка авторизации'
   } finally {
@@ -38,7 +38,7 @@ async function login() {
       </button>
     </form>
 
-    <p v-if="error" style="color: red">
+    <p :style="[error ? { 'visibility' : 'visible'} : {'visibility' : 'hidden'}]">
       {{ error }}
     </p>
   </div>
@@ -46,17 +46,30 @@ async function login() {
 
 <style scoped>
 .auth {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
   max-width: 400px;
-  margin: 100px auto;
+  min-height: 100vh;
+  margin: 0 1.6rem;
   text-align: center;
 }
 input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
+  border-radius: 12px;
 }
 button {
   width: 100%;
   padding: 10px;
+  border-radius: 12px;
+}
+
+p {
+  margin-top: 2rem;
+  color: var(--accent);
+  min-height: 2.4em;
 }
 </style>

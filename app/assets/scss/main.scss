@@ -4,11 +4,11 @@
   box-sizing: border-box;
   overscroll-behavior: none;
   font-family: Montserrat;
+  font-size: 2.4rem;
 }
 
 html {
   min-height: 1vw;
-  font-size: 10px;
 
   margin: 0;
   padding: 0;
@@ -32,7 +32,7 @@ html {
 }
 
 h1 {
-  color: var(--hostel-50);
+  color: var(--light-white);
 }
 
 body {

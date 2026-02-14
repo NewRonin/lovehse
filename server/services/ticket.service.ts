@@ -11,11 +11,11 @@ export async function validateTicketForVoting(number: string) {
   const ticket = await findTicketByNumber(number);
 
   if (!ticket) {
-    throw createError({ statusCode: 404, statusMessage: "Ticket not found" });
+    throw createError({ statusCode: 404, statusMessage: "Билет не найден" });
   }
 
   if (ticket.vote) {
-    throw createError({ statusCode: 403, statusMessage: "Already voted" });
+    throw createError({ statusCode: 403, statusMessage: "Вы уже голосовали" });
   }
 
   return ticket;
